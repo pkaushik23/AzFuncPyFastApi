@@ -1,0 +1,13 @@
+# DO NOT include azure-functions-worker in this file
+# The Python Worker is managed by Azure Functions platform
+# Manually managing azure-functions-worker may cause unexpected issues
+
+azure-functions
+azurefunctions-extensions-http-fastapi
+
+#chromadb==0.4.8
+langchain==0.0.281
+openai==0.28.0
+python-dotenv==1.0.0
+tiktoken==0.4.0
+unstructured==0.10.12
