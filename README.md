@@ -21,3 +21,14 @@ local.settings.json
   }
 }
 ```
+
+local .env file.
+----
+```
+OPENAI_API_TYPE="azure"
+OPENAI_API_BASE="example: https://myendpointname.openai.azure.com/"
+OPENAI_API_KEY="your key"
+OPENAI_API_VERSION="your api version example: 2023-05-15"
+
+AZURE_OPENAI_CHAT_MODEL_DEPLOYMENT_NAME = "gpt-35-turbo-16k"
+```

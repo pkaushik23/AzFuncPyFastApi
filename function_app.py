@@ -12,21 +12,21 @@ async def HttpExample(req: Request) -> Response:
     logging.info('Python HTTP trigger function processed a request.')
     # cors_setting = os.getenv('CORS')
     # logging.info(cors_setting)
-    name = req.get('name')
-    if not name:
+    question = req.get('question')
+    if not question:
         try:
             req_body = await req.json()
         except ValueError:
             pass
         else:
-            name = req_body.get('name')
+            question = req_body.get('question')
 
-    if name: 
-        response = copilot.answer_the_question(name)
+    if question: 
+        response = copilot.answer_the_question(question)
         return Response(status_code=200,content=response.content)
     else:
         return Response(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             "This HTTP triggered function executed successfully. Pass a question in the query string or in the request body for a personalized response.",
              status_code=200
         )
 
@@ -63,7 +63,7 @@ async def HttpExampleStreamed(req: Request) -> StreamingResponse:
         return StreamingResponse(stream_processor(response), media_type="text/event-stream")
     else:
         return Response(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             "This HTTP triggered function executed successfully. Pass a question in the query string or in the request body for a personalized response.",
              status_code=200
         )
 
