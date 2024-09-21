@@ -4,6 +4,8 @@ import logging
 from azurefunctions.extensions.http.fastapi import Request, StreamingResponse, Response, JSONResponse
 
 import copilot.copilot as copilot
+from models.user_dto import UserDto
+from services.user_svc import RegisterUser as RegisterUserSvc
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -67,3 +69,10 @@ async def HttpExampleStreamed(req: Request) -> StreamingResponse:
              status_code=200
         )
 
+@app.route(route='RegisterUser')
+async def RegisterUser(req: Request) -> Response:
+    logging.info('Python HTTP trigger RegisterUser endpoint.')
+    json_data = await req.json()
+    user = UserDto(**json_data)
+    result = await RegisterUserSvc(user)
+    return Response(status_code=200, content=f'User Created? - {result}')

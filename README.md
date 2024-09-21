@@ -32,3 +32,7 @@ OPENAI_API_VERSION="your api version example: 2023-05-15"
 
 AZURE_OPENAI_CHAT_MODEL_DEPLOYMENT_NAME = "gpt-35-turbo-16k"
 ```
+
+## For SQLAlchemy model generation
+* `pip install sqlalchemy-codegen`
+* ``` sqlalchemy-codegen postgresql://dbadmin:dbadminpwd@pgsql.postgres.database.azure.com/chatapp --models_layer --outdir temp```
