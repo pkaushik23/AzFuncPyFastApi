@@ -75,4 +75,4 @@ async def RegisterUser(req: Request) -> Response:
     json_data = await req.json()
     user = UserDto(**json_data)
     result = await RegisterUserSvc(user)
-    return Response(status_code=200, content=f'User Created? - {result}')
+    return Response(status_code=200, content=f'{result}')

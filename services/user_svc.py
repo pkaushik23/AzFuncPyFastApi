@@ -12,13 +12,14 @@ async def RegisterUser(userInfo: UserDto) -> bool:
             # connection_db_user.commit()
 
             # Create an update/insert statement for the "Users" table
-            stmt = insert(DbUser).values(userInfo.to_dict(include_none=False)).on_conflict_do_update(
+            stmt = insert(DbUser).values(userInfo.to_dict(include_none=False)).returning(DbUser.user_id).on_conflict_do_update(
                 index_elements=['azure_ad_id', 'tenant_id'],  # the unique constraint or index for conflict resolution
                 set_={'last_login_at': datetime.datetime.now(datetime.timezone.utc)}  # Update specific fields on conflict
             )
-            connection_db_user.execute(stmt)
+            result = connection_db_user.execute(stmt)
             connection_db_user.commit()
-            return True
+            data = result.fetchone()
+            return data[0]
         except Exception as error:
             print('Error while RegisterUser method', error)
     return False
