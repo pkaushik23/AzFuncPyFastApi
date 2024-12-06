@@ -1,10 +1,11 @@
 import datetime
+from typing import Optional
 from sqlalchemy.dialects.postgresql import insert
 from commands.db import getSession
 from models.user_dto import UserDto
 from models.user import DbUser
 
-async def RegisterUser(userInfo: UserDto) -> bool:
+async def RegisterUser(userInfo: UserDto) -> Optional[str]:
     async with getSession() as connection_db_user:
         try:
             #db_user = DbUser(azure_ad_id=userInfo.azure_ad_id, tenant_id=userInfo.tenant_id, email=userInfo.email, full_name=userInfo.full_name, last_login_at=datetime.datetime.now(datetime.timezone.utc))
@@ -19,7 +20,10 @@ async def RegisterUser(userInfo: UserDto) -> bool:
             result = connection_db_user.execute(stmt)
             connection_db_user.commit()
             data = result.fetchone()
-            return data[0]
+            if data and data[0]:
+                return str(data[0])
+            else:
+                return None  # Indicate failure
         except Exception as error:
             print('Error while RegisterUser method', error)
-    return False
+            return None
